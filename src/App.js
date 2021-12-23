@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import Board from './Board';
+import Modal from './Modal';
+import { restart } from './store/actions';
 import './App.css';
 
-function App() {
+const WinNote = () => {
+  const dispatch = useDispatch();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      You are win!<button onClick={() => dispatch(restart())}>Restart</button>
+    </>
+  );
+};
+function App() {
+  const finish = useSelector((state) => state.finish);
+  return (
+    <>
+      <Board />
+      {finish ? (
+        <Modal>
+          <WinNote />
+        </Modal>
+      ) : null}
+    </>
   );
 }
 
